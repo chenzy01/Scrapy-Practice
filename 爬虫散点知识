@@ -1,2 +1,29 @@
 正则表达式
 1、match()
+match()方法从字符串开头开始匹配，若开头不匹配，则整个匹配失败
+
+2、search()
+search()方法先扫描整个字符串，只返回第一个匹配到的字符串，若搜索不到，则返回None
+
+3、findall()
+findal()方法先搜索整个字符串，然后返回所有符合规则的字符串，返回的结果是列表类型
+
+4、sub()
+sub()方法可用来修改文本，类似replace()方法
+sub()方法第一个参数为正则表达式，第二个参数为替换成的字符串（可赋值为空），第三个参数为原字符串
+例子：
+import re
+content = '3j5k67d3n8m'
+content = re.sub('\d+', '', content)
+print (content)
+#jkdnm
+
+5、compile()
+compile()方法将正则字符串编译成正则表示对象，以便在后面的匹配中复用
+例子：
+import re
+content = '2018-12-15 12:44'
+patten = re.compile('\d{2}:\d{2}')
+result = re.sub(patten, '', content)
+print (result)
+#2018-12-15
