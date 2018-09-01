@@ -27,3 +27,24 @@ patten = re.compile('\d{2}:\d{2}')
 result = re.sub(patten, '', content)
 print (result)
 #2018-12-15
+
+
+Requests用法
+1、requests.get()
+requests.get()方法请求网页，参数是URL，返回一个Response对象，对象中包括Response类型、状态码、响应体的类型、内容和Cookies.
+实际返回的类型是str类型，是JSON格式
+类似方法还包括，post(),put(),delete(),head(),options();
+有些网站必须先添加headers并加上User-Agent信息，才能爬取数据
+
+2、requests.post()
+事先准备好数据，使用post()方法发起请求。
+例子：
+import requests
+data = {'name':'germy','age':'22'}
+r = requests.post("https://httpbin.org/post",data=data)
+
+
+
+
+
+
