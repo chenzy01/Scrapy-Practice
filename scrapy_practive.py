@@ -95,5 +95,51 @@ print(result.group(1))
 #输出：1234567,因为.*?会尽可能少的匹配字符
 
 
+#解析库的使用
+from lxml import etree
+import html
 
+'''
+text =
+<div>
+<ul>
+<li class ="item-0"> <a href="link1.html" > first itme </a> </li>
+
+<li class ="item-1"> <a href="link2.html" > second itme </a> </li>
+<li class ="item-inactive"> <a href="link3.html" > third itme </a> </li>
+<li class ="item-1"> <a href="link4.html" > forth itme </a> </li>
+<li class ="item-0"> <a href="link5.html" > fifth itme </a> 
+</ul>
+</div>
+'''
+#调用HTML类进行初始化，构造一个Xpath解析对象
+#利用etree模块自动修复html
+html = etree.parse('./text.html',etree.HTMLParser())
+result = etree.tostring(html)
+print(result.decode('utf-8'))
+
+#选取所有节点
+result = html.xpath('//*')
+#选取直接子节点a
+result = html.xpath('//li/a')
+#选取父节点，然后获取其属性
+result = html.xpath('//a[@href="link4.html"]/../@class')
+result = html.xpath('//a[@href="link4.html"]/parent::*/@class')
+#属性过滤
+result = html.xpath('//li[@class="item-0"]')
+#获取文本
+result = html.xpath('//li[@class="item-0"]/a/text()') #逐层获取
+result = html.xpath('//li[@class="item-0"]//text()') #获取子孙节点内部的所有文本
+#获取属性
+result = html.xpath('//li/a/@href')
+#属性多值匹配
+'''
+text = <li class="li li-first"><a href="link.html">first time</a></li>
+'''
+result = html.xpath('//li[contains(@class, "li")]/a/text()')
+#多属性匹配,用and操作符相连
+'''
+text = <li class="li li-first" name="item"><a href="link.html">first time</a></li>
+'''
+result = html.xpath('//li[contains(@class, "li") and @name="item"]/a/text()')
 
