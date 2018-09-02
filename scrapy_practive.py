@@ -99,7 +99,7 @@ print(result.group(1))
 from lxml import etree
 import html
 
-'''
+
 text =
 <div>
 <ul>
@@ -111,7 +111,7 @@ text =
 <li class ="item-0"> <a href="link5.html" > fifth itme </a> 
 </ul>
 </div>
-'''
+
 #调用HTML类进行初始化，构造一个Xpath解析对象
 #利用etree模块自动修复html
 html = etree.parse('./text.html',etree.HTMLParser())
@@ -142,4 +142,11 @@ result = html.xpath('//li[contains(@class, "li")]/a/text()')
 text = <li class="li li-first" name="item"><a href="link.html">first time</a></li>
 '''
 result = html.xpath('//li[contains(@class, "li") and @name="item"]/a/text()')
+#按序选择
+result = html.xpath('//li[1]/a/text()')
+result = html.xpath('//li[last()]/a/text()')
+result = html.xpath('//li[position()<3]/a/text()')
+
+
+
 
