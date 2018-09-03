@@ -148,5 +148,79 @@ result = html.xpath('//li[last()]/a/text()')
 result = html.xpath('//li[position()<3]/a/text()')
 
 
+#BeautifulSoup库的使用
+
+import html
+from bs4 import BeautifulSoup
+
+
+html = '''
+<html>
+<head><title>The Dormouse`s story</title>
+</head>
+<body>
+<p class="story">
+    Once upon a time there were three little sisters; and their names were
+    <a href="http://example.com/elsie" class="sister" id="link1">
+    <span>Elsie </span>
+</a>
+<a href="http://example.com/lacie" class="sister" id="link2">Lacie</a> 
+and
+<a href="http://example.com/tillie" class="sister" id="link3">Tillie</a>
+and they lived at the bottom of a well.
+</p>
+<p class="story">...</p>
+'''
+#初始化BeautifulSoup时，会自动更正不标准的HTML字符串
+soup = BeautifulSoup(html, 'lxml')
+prettify() 方法把要解析的字符串按标准格式进行缩进输出
+print(soup.prettify())
+print(soup.title.name)
+print(soup.head)
+#获取指定节点的直接子节点
+print(soup.p.contents)
+print(soup.p.children)
+for i,child in enumerate(soup.p.children):
+    print(i, child)
+#获取所有子孙节点
+print(soup.p.descendants)
+for i,child in enumerate(soup.p.descendants):
+#    print(i, child)
+#分别获取下一个和前一个兄弟节点
+print(soup.p.next_sibling)
+print(soup.p.previous_sibling)
+
+#方法选择
+html ='''
+<div class="panel">
+<div class="panel-heading">
+<h4>hello</h4>
+</div>
+<div class="panel-body">
+<ul class="list" id="list-1" name="elements">
+<li class="element">foo</li>
+<li class="element">bar</li>
+<li class="element">jay</li>
+</ul>
+<ul class="list list-small" id="list-2">
+<li class="element">foo</li>
+<li class="element">bar</li>
+</ul>
+</div>
+</div>
+'''
+#find_all(name, attrs, recursive, text, **kwargs)
+soup = BeautifulSoup(html, 'lxml')
+print(soup.find_all(name='ul'))
+#根据节点名字查询元素
+for ul in soup.find_all(name='ul'):
+    print(ul.find_all(name='li'))
+    for li in ul.find_all(name='li'):
+        print(li.string)
+#根据属性查询元素,attrs参数的类型是字典
+print(soup.find_all(attrs={'id': 'list-1'}))
+print(soup.find_all(attrs={'name': 'elements'}))
+print(soup.find_all(class_='element'))
+
 
 
