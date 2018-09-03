@@ -185,7 +185,7 @@ for i,child in enumerate(soup.p.children):
 #获取所有子孙节点
 print(soup.p.descendants)
 for i,child in enumerate(soup.p.descendants):
-#    print(i, child)
+    print(i, child)
 #分别获取下一个和前一个兄弟节点
 print(soup.p.next_sibling)
 print(soup.p.previous_sibling)
