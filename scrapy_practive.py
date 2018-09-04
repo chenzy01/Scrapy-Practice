@@ -95,7 +95,7 @@ print(result.group(1))
 #输出：1234567,因为.*?会尽可能少的匹配字符
 
 
-#解析库的使用
+#解析库lxml的使用
 from lxml import etree
 import html
 
@@ -221,6 +221,52 @@ for ul in soup.find_all(name='ul'):
 print(soup.find_all(attrs={'id': 'list-1'}))
 print(soup.find_all(attrs={'name': 'elements'}))
 print(soup.find_all(class_='element'))
+
+
+#pyquery 库的使用,基于CSS选择器
+
+from pyquery import PyQuery as pq
+
+html ='''
+<div id="container">
+<ul class="list">
+<li class ="item-0">first itme</li>
+<li class ="item-1"><a href="link2.html" >second itme</a></li>
+<li class ="item-0 active"><a href="link3.html"><span class="bold">third itme</span></a></li>
+<li class ="item-1 active"><a href="link4.html" >forth itme</a></li>
+<li class ="item-0"><a href="link5.html">fifth itme</a> 
+</ul>
+</div>
+'''
+
+doc = pq(html)
+print(doc('li'))
+#初始化URL
+doc = pq(url='http://cuiqingcai.com')
+print(doc('title'))
+
+print(doc('#container .list li'))
+print(type(doc('#container .list li')))
+
+items = doc('.list')
+lis = items.find('li')
+#获取子节点
+lis = items.children('.active')
+print(lis)
+#遍历,调用items()后，得到一个生产器
+lis = doc('li').items()
+for li in lis:
+    print(li, type(li))
+#获取属性
+a = doc('.item-0.active a')
+print(a)
+print(a.attr('href'))
+#获取属文本
+li = doc('li')
+#html()返回第一个li节点内部的HTML文本，text()只返回所有纯文本内容
+#attr(),text(),html(),三个方法若传入参数，则获取相应信息，传入参数，则对相应部分赋值
+print(li.html())
+print(li.text())
 
 
 
