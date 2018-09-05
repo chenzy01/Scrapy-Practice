@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Bob",
+    "gender": "male",
+    "birthday": "1992-10-09"
+  },
+  {
+    "name": "Selina",
+    "gender": "female",
+    "birthday": "1992-11-09"
+  }
+]
