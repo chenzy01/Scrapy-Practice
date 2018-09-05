@@ -1,5 +1,4 @@
 #抓取知乎网页，headers必须传递
-'''
 import requests
 import re
 
@@ -96,17 +95,20 @@ print(result.group(1))
 #输出：1234567,因为.*?会尽可能少的匹配字符
 
 
+#解析库lxml的使用
 from lxml import etree
 import html
+
 
 text =
 <div>
 <ul>
 <li class ="item-0"> <a href="link1.html" > first itme </a> </li>
+
 <li class ="item-1"> <a href="link2.html" > second itme </a> </li>
 <li class ="item-inactive"> <a href="link3.html" > third itme </a> </li>
 <li class ="item-1"> <a href="link4.html" > forth itme </a> </li>
-<li class ="item-0"> <a href="link5.html" > fifth itme </a> 
+<li class ="item-0"> <a href="link5.html" > fifth itme </a>
 </ul>
 </div>
 
@@ -131,27 +133,32 @@ result = html.xpath('//li[@class="item-0"]//text()') #获取子孙节点内部�
 #获取属性
 result = html.xpath('//li/a/@href')
 #属性多值匹配
-
+'''
 text = <li class="li li-first"><a href="link.html">first time</a></li>
-
+'''
 result = html.xpath('//li[contains(@class, "li")]/a/text()')
 #多属性匹配,用and操作符相连
-
+'''
 text = <li class="li li-first" name="item"><a href="link.html">first time</a></li>
-
+'''
 result = html.xpath('//li[contains(@class, "li") and @name="item"]/a/text()')
+#按序选择
+result = html.xpath('//li[1]/a/text()')
+result = html.xpath('//li[last()]/a/text()')
+result = html.xpath('//li[position()<3]/a/text()')
 
+
+#BeautifulSoup库的使用
 
 import html
 from bs4 import BeautifulSoup
 
 
-html = 
+html = '''
 <html>
 <head><title>The Dormouse`s story</title>
 </head>
 <body>
-
 <p class="story">
     Once upon a time there were three little sisters; and their names were
     <a href="http://example.com/elsie" class="sister" id="link1">
@@ -163,28 +170,28 @@ and
 and they lived at the bottom of a well.
 </p>
 <p class="story">...</p>
-
+'''
 #初始化BeautifulSoup时，会自动更正不标准的HTML字符串
 soup = BeautifulSoup(html, 'lxml')
-#prettify() 方法把要解析的字符串按标准格式进行缩进输出
-#print(soup.prettify())
-#print(soup.title.name)
-#print(soup.head)
+prettify() 方法把要解析的字符串按标准格式进行缩进输出
+print(soup.prettify())
+print(soup.title.name)
+print(soup.head)
 #获取指定节点的直接子节点
-#print(soup.p.contents)
-#print(soup.p.children)
-#for i,child in enumerate(soup.p.children):
-#    print(i, child)
+print(soup.p.contents)
+print(soup.p.children)
+for i,child in enumerate(soup.p.children):
+    print(i, child)
 #获取所有子孙节点
-#print(soup.p.descendants)
-#for i,child in enumerate(soup.p.descendants):
-#    print(i, child)
+print(soup.p.descendants)
+for i,child in enumerate(soup.p.descendants):
+    print(i, child)
 #分别获取下一个和前一个兄弟节点
-#print(soup.p.next_sibling)
-#print(soup.p.previous_sibling)
+print(soup.p.next_sibling)
+print(soup.p.previous_sibling)
 
 #方法选择
-html =
+html ='''
 <div class="panel">
 <div class="panel-heading">
 <h4>hello</h4>
@@ -201,20 +208,20 @@ html =
 </ul>
 </div>
 </div>
-
+'''
 #find_all(name, attrs, recursive, text, **kwargs)
 soup = BeautifulSoup(html, 'lxml')
-#print(soup.find_all(name='ul'))
+print(soup.find_all(name='ul'))
 #根据节点名字查询元素
-#for ul in soup.find_all(name='ul'):
-#    print(ul.find_all(name='li'))
-#    for li in ul.find_all(name='li'):
-#        print(li.string)
+for ul in soup.find_all(name='ul'):
+    print(ul.find_all(name='li'))
+    for li in ul.find_all(name='li'):
+        print(li.string)
 #根据属性查询元素,attrs参数的类型是字典
 print(soup.find_all(attrs={'id': 'list-1'}))
 print(soup.find_all(attrs={'name': 'elements'}))
 print(soup.find_all(class_='element'))
-'''
+
 
 #pyquery 库的使用,基于CSS选择器
 
@@ -233,17 +240,19 @@ html ='''
 '''
 
 doc = pq(html)
-#print(doc('li'))
+print(doc('li'))
 #初始化URL
-#doc = pq(url='http://cuiqingcai.com')
-#print(doc('title'))
-#print(doc('#container .list li'))
-#print(type(doc('#container .list li')))
-#items = doc('.list')
-#lis = items.find('li')
+doc = pq(url='http://cuiqingcai.com')
+print(doc('title'))
+
+print(doc('#container .list li'))
+print(type(doc('#container .list li')))
+
+items = doc('.list')
+lis = items.find('li')
 #获取子节点
-#lis = items.children('.active')
-#print(lis)
+lis = items.children('.active')
+print(lis)
 #遍历,调用items()后，得到一个生产器
 lis = doc('li').items()
 for li in lis:
@@ -258,9 +267,6 @@ li = doc('li')
 #attr(),text(),html(),三个方法若传入参数，则获取相应信息，传入参数，则对相应部分赋值
 print(li.html())
 print(li.text())
-
-
-
 
 
 
