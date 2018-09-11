@@ -5,7 +5,6 @@ import json
 from requests.exceptions import RequestException
 import time
 
-base_url = "http://m.maoyan.com/mmdb/comments/movie/1203084.json?_v_=yes&offset="
 
 #获取数据，爬取每一页的评论
 def crawl_every_page_data(url):
@@ -50,6 +49,7 @@ def parse(html):
 #开始抓取数据，爬取影评
 def crawl_film_review(total_page_num=100):
     data = []
+    base_url = "http://m.maoyan.com/mmdb/comments/movie/1203084.json?_v_=yes&offset="
     for i in range(1,total_page_num + 1):
         #构造爬取的地址，间隔1
         url = base_url + str(i)
